@@ -1,0 +1,159 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": "Migrants Proportion by Country 2020",
+  "width": 500,
+  "height": 300,
+  "params": [
+    {
+      "name": "Migrants_Prop_Above",
+      "value": -1000000,
+      "bind": {
+        "input": "range",
+        "min": -1000000,
+        "max": 1500000,
+        "step": 5,
+        "name": "Minimum Migrants_Prop: "
+      }
+    },
+    {
+      "name": "Continent_selection",
+      "bind": {
+        "input": "select",
+        "options": [
+          null,
+          "North America",
+          "South America",
+          "Europe",
+          "Africa",
+          "Asia",
+          "Oceania"
+        ],
+        "labels": [
+          "Show All",
+          "North America",
+          "South America",
+          "Europe",
+          "Africa",
+          "Asia",
+          "Oceania"
+        ],
+        "name": "Continent Selection: "
+      }
+    }
+  ],
+  "data": {
+    "url": "https://raw.githubusercontent.com/zmingpan/test/master/js/ne_110m_admin_0_countries.topojson",
+    "format": {"type": "topojson", "feature": "ne_110m_admin_0_countries"}
+  },
+  "transform": [
+    {
+      "lookup": "properties.NAME",
+      "from": {
+        "data": {
+          "url": "https://raw.githubusercontent.com/zmingpan/test/master/data/population_by_country_2020_1.csv"
+        },
+        "key": "Country",
+        "fields": ["Population", "Migrants","Country"]
+      }
+    },
+    {
+      "calculate": "datum.Migrants",
+      "as": "Migrants_prop"
+    },
+    {"filter": "datum.Migrants_prop > Migrants_Prop_Above"}
+  ],
+  "encoding": {
+    "x": {
+      "field": "Population",
+      "type": "quantitative",
+      "title": "Population",
+      "axis": {"tickCount": 8},
+      "scale": {"type": "log", "domain": [100000, 1500000000]}
+    },
+    "y": {
+      "field": "Migrants_prop",
+      "type": "quantitative",
+      "axis": {"tickCount": 6},
+      "scale": { "domain": [-1000000, 1000000]}
+    }
+  },
+  "layer": [
+    {
+      "selection": {
+        "continent_highlight": {
+          "type": "multi",
+          "fields": ["properties.CONTINENT"],
+          "bind": "legend"
+        }
+      },
+      "mark": "circle",
+      "encoding": {
+        "size": {
+          "field": "Population",
+          "type": "quantitative",
+          "scale": {
+            "type": "threshold",
+            "domain": [1000000, 10000000, 50000000, 100000000, 500000000],
+            "range": [10, 50, 150, 200, 300, 400]
+          },
+          "legend": {"format": ".1s"}
+        },
+        "color": {
+          "field": "properties.CONTINENT",
+          "type": "nominal",
+          "scale": {
+            "domain": [
+              "North America",
+              "South America",
+              "Europe",
+              "Africa",
+              "Asia",
+              "Oceania"
+            ],
+            "range": [
+              "#e41a1c",
+              "#984ea3",
+              "#ff7f00",
+              "#a6cee3",
+              "#377eb8",
+              "#a65628"
+            ]
+          }
+        },
+        "opacity": {
+          "condition": {"selection": "continent_highlight", "value": 0.6},
+          "value": 0.2
+        },
+        "tooltip": [
+          {"field": "Country", "type": "nominal"}
+        ]
+      }
+    },
+    {
+      "mark": {
+        "type": "text",
+        "align": "right",
+        "baseline": "middle",
+        "dx": -12,
+        "fontSize": 11.5,
+        "fontStyle": "italic"
+      },
+      "encoding": {
+        "text": {"field": "Country", "type": "nominal"},
+        "color": {"value": "black"},
+        "opacity": {
+          "condition": {
+            "test": "datum['Country'] == 'China' || datum['Country'] == 'United States of America' || datum['Country'] == 'India' || datum['Country'] == 'Venezuela' || datum['Country'] == 'Syria' || datum['Country'] == 'Germany' ||  datum['Country'] == 'United States'",
+            "value": 1
+          },
+          "value": 0
+        },
+        "tooltip": [
+          {"field": "Country", "type": "nominal"},
+          {"field": "Population", "type": "nominal"},
+          {"field": "Migrants_prop", "type": "nominal"}
+        ]
+      }
+    }
+  ]
+}
