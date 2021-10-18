@@ -1,19 +1,21 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <script src="https://cdn.jsdelivr.net/npm/vega@5.20.2"></script>
-    <script src="https://cdn.jsdelivr.net/npm/vega-lite@5.1.0"></script>
-    <script src="https://cdn.jsdelivr.net/npm/vega-embed@6.17.0"></script>
+  <title>Multiple Visualisations | An Example</title>
+  <!-- Import Vega & Vega-Lite (does not have to be from CDN) -->
+  <script src="https://cdn.jsdelivr.net/npm/vega@5.20.2"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega-lite@5.1.0"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega-embed@6.17.0"></script>
 
-    <!-- Import pure.css -->
-    <link rel="stylesheet" href="https://unpkg.com/purecss@2.0.3/build/pure-min.css" integrity="sha384-cg6SkqEOCV1NbJoCu11+bm0NvBRc8IYLRGXkmNrqUBfTjmMYwNKPWBTIKyw9mHNJ" crossorigin="anonymous">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Import pure.css -->
+  <link rel="stylesheet" href="https://unpkg.com/purecss@2.0.3/build/pure-min.css" integrity="sha384-cg6SkqEOCV1NbJoCu11+bm0NvBRc8IYLRGXkmNrqUBfTjmMYwNKPWBTIKyw9mHNJ" crossorigin="anonymous">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <!-- Google font -->
-    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;700;900&display=swap" rel="stylesheet">
+  <!-- Google font -->
+  <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;700;900&display=swap" rel="stylesheet">
 
-    <!-- CSS file -->
-    <link rel="stylesheet" type="text/css" href="css/styles.css" media="all">
+  <!-- CSS file -->
+  <link rel="stylesheet" type="text/css" href="css/styles.css" media="all">
 
     <meta charset="UTF-8">
     <title>Density Data Map</title>
@@ -25,80 +27,100 @@
     <!-- pure grid group -->
     <div class="pure-g">
         <div class="pure-u-1-1">
-            <h1>Multiple Visualisations</h1>
+            <h1>Correlation between population  and immigrant rate</h1>
             <p>This page demonstrates how you can use pure.css grid for your layout.</p>
         </div>
     </div>
-    <!-- end pure grid group -->
-    <!--        一些改进建议:-->
-    <!--        -使笔画可见以显示国家之间的边界。-为了进一步改进，在地图上添加刻度-工具提示可以提供更多有用的信息-->
-    <!--        -尝试应用数据分类，看看是否可以在地图上看到更好的模式。-->
-    <!--        -使用equalEarth作为世界地图进行投影-->
-    <!--        -领域:有许多关于人口密度的可视化。确保您的领域和数据集能够展示一些创新，并且您的数据足以创建适当的非标准习语。-->
 
     <!-- pure grid group -->
+
+<!--    <div class="pure-g">-->
+<!--        <div class="pure-u-1-1">-->
+<!--            <div class="description description-left">-->
+<!--                <h2>人口密度</h2>-->
+<!--                <p>比较简洁，直接使用数据中的密度，展现在地图中，因为数据覆盖全球，所以Projection使用equirectangular</p>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--        <select name="point"><option value="multi">multiple</option><option value="single">a single</option></select>-->
+<!--        <div class="pure-u-1-1">-->
+<!--            <div id="vis1" class="vis-container"></div>-->
+<!--        </div>-->
+<!--    </div>-->
+    <!-- end pure grid group -->
+
     <div class="pure-g">
         <div class="pure-u-1-1">
             <div class="description description-left">
-                <h2>Map of Week9</h2>
-                <p>It's relatively concise, directly use the density in the data and display it in the map. Because the data covers the world, Projection uses equirectangular</p>
+                <h2>Immigration ratio</h2>
+                <p> The number of immigrants, to a certain extent, explains the international view of the country’s development situation</p>
             </div>
         </div>
         <div class="pure-u-1-1">
-            <div id="vis1" class="vis-container"></div>
-        </div>
-    </div>
-    <!-- end pure grid group -->
-
-    <!-- pure grid group -->
-    <div class="pure-g">
-        <div class="pure-u-1-1">
-            <div class="description description-right">
-                <h2>Improve</h2>
-                <p> Use white color to show the borders between countries. Tooltip adds Population, LandArea information, and uses equalEarth as the world map for projection</p>
-            </div>
+            <p>datum.Migrants/datum.Population * 10000 + 0.1 = Migrants_prop(immigrant ratio)
+                obtain the color depth of the map through the immigrant ratio</p>
+            <div id="vis2_1"  class="vis-container"></div>
         </div>
         <div class="pure-u-1-1">
-            <div id="vis2"  class="vis-container"></div>
+            <p>The Y-axis is the number of immigrants, the X-axis is the total population, up is postive ,down is negative</p>
+            <div id="vis2_2"  class="vis-container"></div>
         </div>
     </div>
-    <!-- end pure grid group -->
 
-    <!-- pure grid group -->
     <div class="pure-g">
         <div class="pure-u-1-1">
             <div class="description description-left">
-                <h2>Two version maps compare</h2>
+                <h2>The relationship between the proportion of urban and the proportion of immigrants</h2>
+                <p>The proportion of urban population can also reflect the level of urban development to a certain extent, 
+                    so explore whether there is a certain relationship between the proportion of urban population and the proportion of immigrants.</p>
             </div>
         </div>
-
-        <div class="pure-u-1-1">
-            <p>Original.</p>
-            <div id="vis3"  class="vis-container"></div>
+        <div class="pure-u-1-3">
+            <p>（1）on the left, the proportion of urban population in Europe and America is much larger than that in rural areas</p>
+            <div id="vis2_31"  class="vis-container"></div>
         </div>
-
+        <div class="pure-u-2-3">
+            <p>（2）on the right, only the rural population in Africa is larger than the urban population, the urban population in Asia is slightly higher than the rural population, and the urban population in Europe and the United States is much larger than the rural population. And continents with a larger urban population have a larger number of immigrants</p>
+            <div id="vis2_3"  class="vis-container"></div>
+        </div>
         <div class="pure-u-1-1">
-            <p>Improve.</p>
-            <div id="vis4"  class="vis-container"></div>
+            <p>But for the country, it seems that the proportion of urbanized population and the proportion of immigrants have little relationship, probably because immigrants will be greatly affected by policies.</p>
+            <div id="vis2_4"  class="vis-container"></div>
         </div>
     </div>
-    <!-- end pure grid group -->
+
     <div class="pure-g">
         <div class="pure-u-1-1">
             <div class="description description-left">
-                <h2>Innovation in data</h2>
-                <p>The number of immigrants, to a certain extent, explains the international view of the country’s development situation</p>
+                <h2>The relationship between the fertility rate and the age of the middle population</h2>
+                <p>The higher the fertility rate, the younger the middle population </p>
             </div>
         </div>
-
-        <div class="pure-u-1-1">
-            <p>Divide the number of immigrants by the total population to obtain the immigrant ratio, and obtain the map color depth through the immigrant ratio</p>
-            <div id="country_population"  class="vis-container"></div>
+        <div class="pure-u-3-5">
+            <div id="vis3_1"  class="vis-container"></div>
         </div>
+        <div class="pure-u-2-5">
+            <div id="vis3_11"  class="vis-container"></div>
+        </div>
+        <div class="pure-u-1-1">
+            <p>It can be seen that the higher the fertility rate, the lower the age of the middle population. The fertility rates of Asian and European countries are generally low, and the fertility rates of African countries are generally high.</p>
+            <div id="vis3_2"  class="vis-container"></div>
+        </div>
+    </div>
 
-        <div class="pure-u-1-2">
-            <p>The Y-axis is the number of immigrants, and the X-axis is the total population.</p>
-            <div id="country_population_2"  class="vis-container"></div>
+    <div class="pure-g">
+        <div class="pure-u-1-1">
+            <div class="description description-left">
+                <h2>The relationship between the fertility rate and the country's development</h2>
+                <p>Result</p>
+                <p>(1) For countries with high fertility rates, the immigration rate is very low, and neither immigrants leave the country nor enter the country.</p>
+                <p>(2) For countries with low fertility rates, there are both a large number of immigrants leaving the country and a large number of immigrants entering the country.</P>
+                <p>It may be at the early stage of the country’s development , the policies and means of transportation are immature, and residents cannot access the immigrants (for example, the Fert Rate between 4.5 ~ 7)</p>
+                <p>When the country has developed to a certain stage, with mature policies and means of transportation, and the move of residents to immigrate. At this time, the country has not yet developed wealth, so most of the immigrants go abroad (for example, the Fert Rate is 3 ~ 4.5)</p>
+                <p>However, countries with low fertility rates have matured development, with very complete policies, and countries have unique characteristics with few commonalities and irregular immigration.</p>
+            </div>
+        </div>
+        <div class="pure-u-1-1">
+            <div id="vis4_1"  class="vis-container"></div>
         </div>
     </div>
 
@@ -106,47 +128,66 @@
         <div class="pure-u-1-1 small-font">
             <p>
                 This visualisation is created by
-                <a href="https://github.com/Pharos0820" target="_blank">Github上的主页</a>
+                <a href="https://github.com/zmingpan" target="_blank">Github上的主页</a>
                 . The datasource is
-                <a href="https://github.com/Pharos0820/pharos" target="_blank">Github上的数据</a>.
+                <a href="https://github.com/zmingpan/week10" target="_blank">Github上的数据</a>.
             </p>
         </div>
     </div>
 
 
 </div> <!-- end page -->
-
+   
 <script type="text/javascript">
-    var specVis1 = "js/country_population.vg.json";
-    var specVis2= "js/country_population_2.vg.json";
+    var specVis1 = "js/country_population_2.vg.json";
+    var specVis21 = "js/country_population_3.vg.json";
+    var specVis22 = "js/country_population_4.vg.json";
+    var specVis23 = "js/urban_mig.vg.json";
+    var specVis231 = "js/urban_mig1.vg.json";
+    var specVis24 = "js/urban_mig_2.vg.json";
+    var specVis31 = "js/med_fert.vg.json";
+    var specVis311 = "js/med_fert1.vg.json";
+    var specVis32 = "js/med_fert_2.vg.json";
+    var specVis41 = "js/urban_fert.vg.json";
 
     vegaEmbed('#vis1', specVis1, {"actions": false}).then(function(result) {
         // Access the Vega view instance (https://vega.github.io/vega/docs/api/view/) as result.view
     }).catch(console.error);
 
-    vegaEmbed('#vis2', specVis2, {"actions": false}).then(function(result) {
+    vegaEmbed('#vis2_1', specVis21, {"actions": false}).then(function(result) {
         // Access the Vega view instance (https://vega.github.io/vega/docs/api/view/) as result.view
     }).catch(console.error);
 
-    vegaEmbed('#vis3', specVis1, {"actions": false}).then(function(result) {
+    vegaEmbed('#vis2_2', specVis22, {"actions": false}).then(function(result) {
         // Access the Vega view instance (https://vega.github.io/vega/docs/api/view/) as result.view
     }).catch(console.error);
 
-    vegaEmbed('#vis4', specVis2, {"actions": false}).then(function(result) {
+    vegaEmbed('#vis2_3', specVis23, {"actions": false}).then(function(result) {
+        // Access the Vega view instance (https://vega.github.io/vega/docs/api/view/) as result.view
+    }).catch(console.error);
+    vegaEmbed('#vis2_31', specVis231, {"actions": false}).then(function(result) {
         // Access the Vega view instance (https://vega.github.io/vega/docs/api/view/) as result.view
     }).catch(console.error);
 
-    var path = "./js/country_population_3.vg.json";
-    vegaEmbed('#country_population', path).then(function(result) {
+    vegaEmbed('#vis2_4', specVis24, {"actions": false}).then(function(result) {
+        // Access the Vega view instance (https://vega.github.io/vega/docs/api/view/) as result.view
     }).catch(console.error);
 
-    var path = "./js/country_population_4.vg.json";
-    vegaEmbed('#country_population_2', path).then(function(result) {
+    vegaEmbed('#vis3_1', specVis31, {"actions": false}).then(function(result) {
+        // Access the Vega view instance (https://vega.github.io/vega/docs/api/view/) as result.view
     }).catch(console.error);
+    vegaEmbed('#vis3_11', specVis311, {"actions": false}).then(function(result) {
+        // Access the Vega view instance (https://vega.github.io/vega/docs/api/view/) as result.view
+    }).catch(console.error);
+
+    vegaEmbed('#vis3_2', specVis32, {"actions": false}).then(function(result) {
+        // Access the Vega view instance (https://vega.github.io/vega/docs/api/view/) as result.view
+    }).catch(console.error);
+
+    vegaEmbed('#vis4_1', specVis41, {"actions": false}).then(function(result) {
+        // Access the Vega view instance (https://vega.github.io/vega/docs/api/view/) as result.view
+    }).catch(console.error);
+
 </script>
-
-
-
-
 </body>
 </html>

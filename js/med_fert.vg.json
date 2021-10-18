@@ -1,0 +1,41 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": "Median Age and Fertility Rate 2020",
+  "width": 300,
+  "height": 200,
+  "data": {
+    "url": "https://raw.githubusercontent.com/zmingpan/test/master/js/ne_110m_admin_0_countries.topojson",
+    "format": {"type": "topojson", "feature": "ne_110m_admin_0_countries"}
+  },
+
+  "transform": [
+    {
+      "lookup": "properties.NAME",
+      "from": {
+        "data": {
+          "url": "https://raw.githubusercontent.com/zmingpan/week10/master/data/population_by_country_2020_1.csv"
+        },
+        "key": "Country",
+        "fields": ["FertRate", "MedAge","Country"]
+      }
+    }
+  ],
+  "mark": "point",
+  "encoding": {
+    "x": {
+      "field": "FertRate",
+      "type": "quantitative",
+      "scale": {"zero": false}
+    },
+    "y": {
+      "field": "MedAge",
+      "type": "quantitative",
+      "scale": {"zero": false}
+    },
+    "color": {"field": "properties.CONTINENT", "type": "nominal","title":"Continent"},
+    "shape": {"field": "properties.CONTINENT", "type": "nominal"},
+    "tooltip": [
+      {"field": "Country", "type": "nominal"}
+    ]
+  }
+}

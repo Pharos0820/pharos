@@ -60,7 +60,10 @@
       "calculate": "datum.Migrants",
       "as": "Migrants_prop"
     },
-    {"filter": "datum.Migrants_prop > Migrants_Prop_Above"}
+    {"filter": "datum.Migrants_prop > Migrants_Prop_Above"},
+    {
+      "filter": "Continent_selection == null || datum.properties.CONTINENT == Continent_selection"
+    }
   ],
   "encoding": {
     "x": {
