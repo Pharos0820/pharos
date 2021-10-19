@@ -51,7 +51,7 @@
     },
     "color": {
       "field": "key",
-      "scale": {"range": ["#B5D4FA", "#66ccff","#ff3366"]}
+      "scale": {"range": ["#B5D4FA", "#FF0000","#3399FF"]}
     }
   },
   "config": {
